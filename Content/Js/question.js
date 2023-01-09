@@ -1,32 +1,41 @@
-function saveAnswer(event) {
-    var answer = event.target.value;
-    var questionNumber = document.querySelector('script').innerHTML;
-    var storageName = questionNumber;
-    localStorage.setItem(storageName, answer);
-}
+var Survey = {
 
-function loadAnswer() {
-    var questionNumber = document.querySelector('script').innerHTML;
-    var storageName = questionNumber;
-    var answer = localStorage.getItem(storageName);
-    if (answer != null) {
-        document.getElementById(answer).checked = true;
-    }
-}
-window.addEventListener("load", loadAnswer);
+    Actions: {
+        init: () => {
+            if (questionNo) {
+                //soruların olduğu sayfalardayız
+                var currentPage = "answer-" + questionNo;
+                var currentPageAnswer = localStorage.getItem(currentPage);
+                if (currentPageAnswer) {
+                    document.getElementById(currentPageAnswer).checked = true;
+                }
+            }
+            else {
+                //result sayfasındayız
+                var total = 0;
+                for (let i = 1; i < 6; i++) {
+                    var answer = localStorage.getItem("answer-" + i);
+                    total = total + (answer === "yes" ? 20 : 0);
+                }
+                document.getElementById("result").innerText = total;
+            }
+        },
+        next: () => {
+            var answer = document.querySelector("input[type='radio']:checked").value;
+            // var answer =  document.getElementById("yes").checked;
 
-function displayTotalScore() {
-    var totalScore = 0;
+            var _qNo = "answer-" + questionNo;
+            localStorage.setItem(_qNo, answer);
+            var nextPage = parseInt(questionNo) + 1;
 
-    for (var i = 1; i <= localStorage.length; i++) {
-        var storageName = "question" + i;
-        var answer = localStorage.getItem(storageName);
-        if (answer == "yes") {
-            totalScore += 20;
+            if (nextPage > 5) {
+                window.location.href = "/result.html";
+            }
+            else {
+                window.location.href = "/question" + nextPage + ".html";
+            }
         }
     }
-    document.getElementById('total-score').innerHTML ="Puan: " + totalScore;
-}
-window.addEventListener("load", displayTotalScore);
+};
 
-
+Survey.Actions.init();

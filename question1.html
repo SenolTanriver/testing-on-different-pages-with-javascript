@@ -23,19 +23,27 @@
       </p>
       <br><br>
 
-      <input type="radio" name="question" value="yes" id="yes" onclick="saveAnswer(event)">
-      <label for="yes">Evet</label><br>
-      <input type="radio" name="question" value="no" id="no" onclick="saveAnswer(event)">
-      <label for="no">Hayır</label><br>
+      <div class="soru">Soru 1</div>
+      <div>
+          <label for="yes">Evet</label>
+          <input type="radio" name="question" value="yes" id="yes">
+      </div>
+      <div>
+          <label for="no">Hayır</label>
+          <input type="radio" name="question" value="no" id="no">
+      </div>  
 
 
-      <a href="./question2.html" class="next">2. soruya geç</a>
+      <button class="next" onclick="Survey.Actions.next();"> İleri </button>
 
     </div>
 
   </section>
+  
+  <script>
+    var questionNo = "1";
+</script>
   <script src="Content/Js/question.js">
-    question1
   </script>
 
 </body>
